@@ -661,6 +661,12 @@ class DurationTest < ActiveSupport::TestCase
     assert_equal 660, (d1 + 60).to_i
   end
 
+  def test_duration_normalization
+    duration = 50.hours + 215.minutes + 617.seconds
+
+    assert_equal {days: 2, hours: 5, minutes: 45, seconds: 17.0}, duration.normalize.parts
+  end
+
   private
     def eastern_time_zone
       if Gem.win_platform?

@@ -397,6 +397,14 @@ module ActiveSupport
       ISO8601Serializer.new(self, precision: precision).serialize
     end
 
+    # Normalizes the parts of the duration to be more comprehensible.
+    #
+    #   duration = 50.hours + 215.minutes + 617.seconds # => 50 hours, 215 minutes, and 617 seconds
+    #   duration.normalize # => 2 days, 5 hours, 45 minutes, and 17.0 seconds
+    def normalize
+      Duration.build(@value)
+    end
+
     private
 
       def sum(sign, time = ::Time.current)
